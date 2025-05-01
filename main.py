@@ -1,7 +1,6 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
-# Load model and tokenizer once
 MODEL_NAME = "google/flan-t5-large"
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
@@ -23,12 +22,10 @@ def analyze_requirement(requirement: str) -> dict:
     if not requirement:
         raise ValueError("Requirement is empty.")
 
-    # Prompts for different parts
     modules_prompt = f"What are the main modules in this software system: '{requirement}'?"
     schema_prompt = f"Design the database schema for this system: '{requirement}'. Output in JSON-like format."
     pseudocode_prompt = f"Write pseudocode for the core features of this requirement: '{requirement}'."
 
-    # Generate results
     modules = generate_response(modules_prompt)
     schema = generate_response(schema_prompt)
     pseudocode = generate_response(pseudocode_prompt)
@@ -39,7 +36,6 @@ def analyze_requirement(requirement: str) -> dict:
         "pseudocode": pseudocode
     }
 
-# For testing directly
 if __name__ == "__main__":
     requirement = input("Enter High Level Requirement")
     result = analyze_requirement(requirement)
